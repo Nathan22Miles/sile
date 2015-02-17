@@ -72,6 +72,11 @@ function twocol:endPage()
 
   -- if 0 == 0 then return end
 
+  SILE.settings.pushState()
+  assert(SILE.scratch.headers.frameWidth)
+  SILE.settings.set("typesetter.breakwidth", SILE.length.new({ length = SILE.scratch.headers.frameWidth }))
+  SILE.settings.set("current.parindent", SILE.nodefactory.zeroGlue)
+
   SILE.typesetNaturally(
     SILE.getFrame("runningHead"),
     -- running header is centered, ommitted on first page of section
@@ -79,6 +84,7 @@ function twocol:endPage()
     function()
       SILE.settings.set("current.parindent", SILE.nodefactory.zeroGlue)
       SILE.settings.set("typesetter.parfillskip", SILE.nodefactory.zeroGlue)
+
       if not twocol:oddPage() then
         SILE.Commands["bodyfont"](
             {}, 
@@ -109,6 +115,8 @@ function twocol:endPage()
     end)
 
   SILE.scratch.headers.newHeader = false
+
+  SILE.settings.popState()
 end
 
 local typesetter = SILE.defaultTypesetter {};
@@ -169,6 +177,7 @@ end
 function typesetter:startTwoCol()
   SILE.typesetter:leaveHmode()
   self.columnWidth = (self.frame:width() - self.gapWidth)  / 2
+  SILE.scratch.headers.frameWidth = self.frame:width()
   SILE.settings.set("typesetter.breakwidth", SILE.length.new({ length = self.columnWidth }))
 
   local oq = self.state.outputQueue

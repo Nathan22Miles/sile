@@ -150,6 +150,8 @@ SILE.defaultTypesetter = std.object {
     SU.debug("typesetter", "Boxed up "..listToString(nl));
 
     local breakWidth = SILE.settings.get("typesetter.breakwidth") or self.frame:width()
+    SU.debug("typesetter", "breakWidth="..SILE.settings.get("typesetter.breakwidth"))
+    
     if (type(breakWidth) == "table") then breakWidth = breakWidth.length end
     local breaks = SILE.linebreak:doBreak( nl, breakWidth);
     if (#breaks == 0) then
@@ -418,10 +420,12 @@ SILE.typesetNaturally = function (frame, f)
   if SILE.typesetter.frame then SILE.typesetter.frame:leave() end
   SILE.typesetter = SILE.defaultTypesetter {};
   SILE.typesetter:init(frame)
+  SILE.debugFlags.typesetter = true
   SILE.settings.temporarily(f)
   SILE.typesetter:leaveHmode()
   SILE.typesetter:chuck()
   SILE.typesetter.frame:leave()
+  SILE.debugFlags.typesetter = false
   SILE.typesetter = saveTypesetter
   if SILE.typesetter.frame then SILE.typesetter.frame:enter() end
 end;
