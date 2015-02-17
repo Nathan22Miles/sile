@@ -25,8 +25,8 @@
 %
 \define[command=titles]{\eject\vfill\process\vfill}%
 %
-\define[command=mt1]{\par\font[size=32pt]{\bold{\rrcenter{\process}}}}%
-\define[command=mt2]{\par\font[size=28pt]{\bold{\rrcenter{\process}}}}%
+\define[command=mt1]{\par\font[size=32pt]{\set[parameter=document.spaceskip]\bold{\rrcenter{\process}}}}%
+\define[command=mt2]{\par\font[size=28pt]{\set[parameter=document.spaceskip]\bold{\rrcenter{\process}}}}%
 \define[command=mt]{\mt1{\process}}%
 %
 \define[command=p2]{\par\plain{\noindent\em{\process}}}%
