@@ -40,10 +40,6 @@
 \define[command=m2]{\par\rrcenter{\process}}%
 \define[command=mr]{\mrx{\process}}%
 \define[command=pm]{\p{\process}}%
-\define[command=sp]{%
-\par\set[parameter=document.lskip, value=20pt]%
-\set[parameter=current.parindent, value=-20pt]%
-\process}
 %
 \define[command=q1]{%
 \par\set[parameter=document.lskip, value=30pt]%
@@ -81,10 +77,21 @@
 \define[command=io2]{}%
 \define[command=ip]{}%
 \define[command=li1]{}%
+\define[command=verse]{}%
+%
 \define[command=raggedright]{%
 \set[parameter=document.rskip, value=0 plus 12em]%
 \set[parameter=document.spaceskip, value=0.333em]}%
 \raggedright%
+%
+\define[command=who]{\par\font[family=Courier,weight=800,size=14pt]{\process}}%
+\define[command=nowho]{\par\font[family=Courier,weight=800,size=14pt]{\process}}%
+\define[command=sp]{%
+\par%
+\set[parameter=document.lskip, value=20pt]%
+\set[parameter=current.parindent, value=-20pt]%
+\process%
+\medskip}%
 %
 \font[family=Gentium Book Basic,size=12pt]%
 \define[command=hfont]{%

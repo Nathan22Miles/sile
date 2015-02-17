@@ -1,16 +1,14 @@
+-- add spaces in PSA bekim
+-- odd header alignment
+-- write code to insert headings
+-- document process in GitHub
 
--- change lectionary_styles to .sil
--- switch to new project and latest sile
+-- support in twocol <eject/>
 
--- process usx to input form, test for year B
---     support <eject/>
--- add headings to year C, test
-
--- get lectionary test data
 -- port to windows
 
 -- SILE.debugFlags["break"] = true
--- SILE.debugFlags.dump = true
+-- SILE.debugFlags.typesetter = true
 
 local plain = SILE.require("classes/plain");
 local twocol = std.tree.clone(plain);
@@ -58,8 +56,6 @@ SILE.scratch.headers.pageno = 0
 SILE.scratch.headers.startNumbering = false
 
 function twocol:endPage()
-  print("info="..SILE.scratch.info.thispage)
-
   -- we don't number pages until the first <info> found
   -- the first page of each new info section has an empty header
   if SILE.scratch.info.thispage.h then
@@ -73,6 +69,8 @@ function twocol:endPage()
 
   SILE.scratch.headers.pageno = SILE.scratch.headers.pageno + 1
   io.write("["..SILE.scratch.headers.pageno.."] ")
+
+  -- if 0 == 0 then return end
 
   SILE.typesetNaturally(
     SILE.getFrame("runningHead"),
@@ -115,6 +113,10 @@ end
 
 local typesetter = SILE.defaultTypesetter {};
 SILE.typesetter = typesetter
+
+-- pushBack is an interesting idea but it inserts strange vertical skips
+-- in the lectionary. Don't do it.
+typesetter.pushBack = function() end
 
 local function twocol_func(options, content)
   SU.debug("typesetter", "   start twocols")
