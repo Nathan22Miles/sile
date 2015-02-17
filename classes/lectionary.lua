@@ -76,6 +76,13 @@ function twocol:endPage()
   assert(SILE.scratch.headers.frameWidth)
   SILE.settings.set("typesetter.breakwidth", SILE.length.new({ length = SILE.scratch.headers.frameWidth }))
   SILE.settings.set("current.parindent", SILE.nodefactory.zeroGlue)
+  SILE.settings.set("document.lskip", SILE.nodefactory.zeroGlue)
+
+  --print("Settings")
+  --for k,s in pairs(SILE.settings.state) do
+  --    print(k,s)
+  --end
+  --print()
 
   SILE.typesetNaturally(
     SILE.getFrame("runningHead"),
