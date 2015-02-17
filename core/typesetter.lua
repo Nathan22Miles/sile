@@ -420,12 +420,10 @@ SILE.typesetNaturally = function (frame, f)
   if SILE.typesetter.frame then SILE.typesetter.frame:leave() end
   SILE.typesetter = SILE.defaultTypesetter {};
   SILE.typesetter:init(frame)
-  SILE.debugFlags.typesetter = true
   SILE.settings.temporarily(f)
   SILE.typesetter:leaveHmode()
   SILE.typesetter:chuck()
   SILE.typesetter.frame:leave()
-  SILE.debugFlags.typesetter = false
   SILE.typesetter = saveTypesetter
   if SILE.typesetter.frame then SILE.typesetter.frame:enter() end
 end;
