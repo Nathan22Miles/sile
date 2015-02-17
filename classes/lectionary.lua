@@ -161,16 +161,16 @@ SILE.registerCommand("twocol", twocol_func,
   "Temporarily switch to two balanced columns")
 
 -- If we are near the end of a page this is a good place to break
-local plus90 = SILE.nodefactory.newVglue(
-  {height = SILE.length.new({length = 90})})
-local minus90 = SILE.nodefactory.newVglue(
-  {height = SILE.length.new({length = -90})})
+local plus120 = SILE.nodefactory.newVglue(
+  {height = SILE.length.new({length = 120})})
+local minus120 = SILE.nodefactory.newVglue(
+  {height = SILE.length.new({length = -120})})
 SILE.registerCommand("gdbreak", function(o,c) 
   SILE.typesetter:leaveHmode()
   SILE.typesetter:pushPenalty({ flagged= 1, penalty= -500 })
-  SILE.typesetter:pushVglue(plus90) 
+  SILE.typesetter:pushVglue(plus120) 
   SILE.typesetter:pushPenalty({ flagged= 1, penalty= -500 })
-  SILE.typesetter:pushVglue(minus90) 
+  SILE.typesetter:pushVglue(minus120) 
   end, "good place to break")
 
 function typesetter:init()

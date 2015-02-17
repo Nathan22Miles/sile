@@ -9,7 +9,7 @@
 %
 \define[command=ms1]{\par\rrcenter{\biggest{\process}}\bigskip\medskip}%
 %
-\define[command=ms2]{\par\rrcenter{\big{\process}}}%
+\define[command=ms2]{\par\noindent{\big{\process}}}%
 %
 \define[command=ms]{% 
 \par\gdbreak%
@@ -88,8 +88,8 @@
 \define[command=nowho]{\par\font[family=Courier,weight=800,size=14pt]{\process}}%
 \define[command=sp]{%
 \par%
-\set[parameter=document.lskip, value=20pt]%
-\set[parameter=current.parindent, value=-20pt]%
+\set[parameter=document.lskip, value=18pt]%
+\set[parameter=current.parindent, value=-18pt]%
 \process%
 \medskip}%
 %
