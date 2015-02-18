@@ -44,9 +44,6 @@ text = re.sub(ur'\u00c7', ur'\u0197', text)
 text = re.sub(r'<chapter.*?/>\s*', r'', text)
 text = re.sub(r'<rem>.*?</rem>\s*', r'', text)
 
-# gather \mt's onto their own page
-text = re.sub(r'((?: *(?:<mt|<b/).*\n)+)', r'  <eject/>\n  <vfill/>\n\1  <vfill/>\n', text)
-
 # add <eject/><h>
 text = re.sub(r'<ms1>(.*?)</ms1>', r'  <eject/>\n  <h>\1</h>\n  <ms1>\1</ms1>', text)
 
@@ -56,7 +53,7 @@ text = re.sub(r'\n +', r'\n', text)
 
 # tag speaker in plays
 text = re.sub(r'<sp>(\w:)', r'<sp><who>\1</who>', text)
-text = re.sub(r'<sp>([^<])', ur'<sp><nowho>\u00a0\u00a0</nowho>', text)
+text = re.sub(r'<sp>([^<])', ur'<sp><nowho>\u00a0\u00a0\u2009</nowho>', text)
 
 # usx -> sile
 text = re.sub(r'<usx .*?>',  r'<sile class="lectionary" papersize="a4">\n<include src="lectionary/styles.sil" />', text)
@@ -70,12 +67,17 @@ text = re.sub(r'<para style="" status="unknown" />\s*', '', text)
 # change running headers to info nodes
 text = re.sub(r'<h>(.*)</h>', r'<info category="h" value="\1" />', text)
 
+# gather \mt's onto their own page
+mt = r'(?:<mt.*\n)'
+mtorb = r'(?:<(?:mt|b).*\n)'
+text = re.sub(r'(' + mt + mtorb + r'*)', r'<eject/>\n<vfill/>\n\1<vfill/>\n', text)
+
 # remove first eject (so we don't start with a blank page)
 text = re.sub(r'<eject/>\s*', '', text, 1)
 
 # Add an <info> to the title pages dividing major sections.
 # Remove the first one because we don't want it to have a page number.
-text = re.sub(r'(<vfill>\n)(<mt)', 
+text = re.sub(r'(<vfill/>\n)(<mt)', 
 	ur'\1<info category="h" value="\u00a0" />\n\2', text)
 text = re.sub(r'<info .*?/>\n', r'', text, 1)
     

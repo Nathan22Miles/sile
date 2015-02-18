@@ -10,6 +10,8 @@
 -- SILE.debugFlags["break"] = true
 -- SILE.debugFlags.typesetter = true
 
+SILE.debugFlags.total = false
+
 local plain = SILE.require("classes/plain");
 local twocol = std.tree.clone(plain);
 twocol.id = "twocol"
@@ -210,6 +212,12 @@ function typesetter:pageBuilder(independent)
 
   local oq = self.state.outputQueue
 
+  -- remove discardable stuff at beginning of page
+  while #oq > 0 and isDiscardable(oq[1]) do
+    table.remove(oq, 1)
+    if self.left > 1 then self.left = self.left - 1 end
+  end
+
   -- make 2col material start at first non-zero height vbox
   while self.left <= #oq do
     local box = oq[self.left]
@@ -224,6 +232,7 @@ function typesetter:pageBuilder(independent)
   SU.debug("columns", "pageBuilder left="..self.left..", #oq="..#oq)
 
   local currentHeight = typesetter:totalHeight(1, self.left)
+
   local targetHeight = SILE.length.new({ length = self.frame:height() }) 
   targetHeight = targetHeight - currentHeight
 
