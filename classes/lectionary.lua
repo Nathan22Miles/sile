@@ -10,8 +10,6 @@
 -- SILE.debugFlags["break"] = true
 -- SILE.debugFlags.typesetter = true
 
-SILE.debugFlags.total = false
-
 local plain = SILE.require("classes/plain");
 local twocol = std.tree.clone(plain);
 twocol.id = "twocol"
@@ -75,8 +73,9 @@ function twocol:endPage()
   -- if 0 == 0 then return end
 
   SILE.settings.pushState()
-  assert(SILE.scratch.headers.frameWidth)
-  SILE.settings.set("typesetter.breakwidth", SILE.length.new({ length = SILE.scratch.headers.frameWidth }))
+  if SILE.scratch.headers.frameWidth then
+    SILE.settings.set("typesetter.breakwidth", SILE.length.new({ length = SILE.scratch.headers.frameWidth }))
+  end    
   SILE.settings.set("current.parindent", SILE.nodefactory.zeroGlue)
   SILE.settings.set("document.lskip", SILE.nodefactory.zeroGlue)
 
@@ -484,7 +483,8 @@ function tcpb.findBestTwoColBreak(oq, left, targetHeight)
   return right, rightEnd, penalty
 end
 
--- warning! right may be as large as #oq+1
+-- Find the best rightEnd given left and right.
+-- Warning! right may be as large as #oq+1
 -- returns rightEnd, penalty, height
 function tcpb.findBestTwoColBreak2(oq, left, right, targetHeight)
   SU.debug("twocol",
@@ -531,7 +531,11 @@ function tcpb.countLines(oq, first)
 end
 
 -- return penalty
-function tcpb.calculatePenalty(leftPenalty, rightPenalty, pageBottomGap, interColumnGap, remainingLines)
+function tcpb.calculatePenalty(leftPenalty, rightPenalty, pageBottomGap, 
+         interColumnGap, remainingLines)
+
+  if remainingLines > 0 and remainingLines < 7 then return 9999 end
+  
   local penalty
   if leftPenalty > 100 or rightPenalty > 100 then 
     penalty = overfull 
