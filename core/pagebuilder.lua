@@ -18,6 +18,13 @@ SILE.pagebuilder = {
     return output
   end,
 
+  badness = function (t,s)
+    local bad = 100 * (t/s)^3
+    bad = math.floor(bad) -- TeX uses integer math for this stuff, so for compatibility...
+
+    if bad > inf_bad then return inf_bad else return bad end
+  end,
+
   findBestBreak = function(vboxlist, target)
     local i
     local totalHeight = SILE.length.new()
@@ -29,7 +36,7 @@ SILE.pagebuilder = {
       if (vbox:isVbox()) then
         totalHeight = totalHeight + vbox.height + vbox.depth;
       elseif vbox:isVglue() then
-        totalHeight = totalHeight + vbox.height.length;
+        totalHeight = totalHeight + vbox.height
       end
       local left = target - totalHeight.length
       SU.debug("pagebuilder", "I have " .. tostring(left) .. "pts left");
@@ -39,7 +46,14 @@ SILE.pagebuilder = {
         pi = vbox.penalty
       end 
       if vbox:isPenalty() and vbox.penalty < inf_bad  or (vbox:isVglue() and i > 1 and not vboxlist[i-1]:isDiscardable()) then
-        local badness = left > 0 and left * left * left or awful_bad;
+        local badness
+        if totalHeight.length < target then -- TeX #1039
+          -- Account for infinite stretch?
+          badness = SILE.pagebuilder.badness(left, totalHeight.stretch)
+        elseif left < totalHeight.shrink then badness = awful_bad
+        else badness = SILE.pagebuilder.badness(-left, totalHeight.shrink)
+        end
+
         local c
         if badness < awful_bad then 
           if pi <= eject_penalty then c = pi

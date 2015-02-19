@@ -1,6 +1,5 @@
 if HARFBUZZLIBTEXPDF
-coredir = $(pkgdatadir)/core
-core_LTLIBRARIES = justenoughharfbuzz.la justenoughlibtexpdf.la
+pkglib_LTLIBRARIES = justenoughharfbuzz.la justenoughlibtexpdf.la
 justenoughharfbuzz_la_SOURCES = justenoughharfbuzz.c
 justenoughharfbuzz_la_LDFLAGS = -module -avoid-version -shared
 justenoughharfbuzz_la_CFLAGS = $(HARFBUZZ_CFLAGS) $(FREETYPE_CFLAGS) $(FONTCONFIG_CFLAGS) $(LUA_INCLUDE)
@@ -11,6 +10,6 @@ justenoughlibtexpdf_la_LDFLAGS = -module -avoid-version -shared
 justenoughlibtexpdf_la_CFLAGS = -I.. $(LIBPNG_INCLUDES) $(ZLIB_INCLUDES) $(LIBPAPER_INCLUDES) $(LUA_INCLUDE) $(FREETYPE_CFLAGS)
 justenoughlibtexpdf_la_LIBADD = ../libtexpdf/.libs/libtexpdf.la $(FREETYPE_LIBS) $(LIBPNG_LIBS) $(ZLIB_LIBS) $(LIBPAPER_LIBS)
 
-all-local: $(core_LTLIBRARIES)
+all-local: $(pkglib_LTLIBRARIES)
 	cp .libs/justenoughharfbuzz.so .libs/justenoughlibtexpdf.so ../core
 endif
