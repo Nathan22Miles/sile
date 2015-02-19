@@ -7,19 +7,28 @@
 \define[command=big]{\font[size=14pt]{\process}}%
 \define[command=bold]{\font[weight=800]{\process}}%
 %
-\define[command=ms1]{\par\rrcenter{\biggest{\process}}\bigskip\medskip}%
+\define[command=ms1]{%
+\skip[height=0pt plus 8pt minus 2pt]%
+\par\rrcenter{\biggest{\process}}%
+\skip[height=14pt plus 8pt minus 2pt]}%
 %
-\define[command=ms2]{\par\noindent{\big{\process}}}%
+\define[command=ms2]{\par{\big{\noindent\process}}}%
 %
 \define[command=ms]{% 
 \par\gdbreak%
 \set[parameter=document.lskip,value=0pt]%
-\bigskip\noindent\big{\bold{\process}}\medskip}%
+\skip[height=0pt plus 8pt minus 2pt]%
+\bigskip\noindent\big{\bold{\process}}%
+\skip[height=8pt plus 8pt minus 2pt]}%
 %
 \define[command=mrx]{%
 \par\set[parameter=document.lskip,value=0pt]\smallskip\rrcenter{\em{\process}}\b}%
 %
-\define[command=s1]{\par\set[parameter=document.lskip,value=0pt]\noindent{\bold{\process}}}%
+\define[command=s1]{\par\set[parameter=document.lskip,value=0pt]%
+\skip[height=0pt plus 8pt minus 2pt]%
+\noindent{\bold{\process}}%
+\skip[height=0pt plus 8pt minus 2pt]%
+}%
 \define[command=s2]{\par\medskip\bold{\right{\process}}}%
 \define[command=rq]{\hfill\hfill\process}%
 %
