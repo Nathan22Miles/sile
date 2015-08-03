@@ -1,6 +1,15 @@
 This is a process to make it reasonably efficient to create and typeset
 a tok ples Roman Catholic lectionary based on the PNG Tok Pisin Lectionary.
 
+It would be wise to discuss the project with the church hierarchy before
+doing this. I believe you will need an Imprimatur (approval) before you
+can distribute this to the churches.
+
+Elizabeth Vahey Smith worked on creating the initial control files to allow this.
+Marsha Relyea Miles did editing and refinement of these files.
+Nathan Miles wrote the typesetting software based on existing SILE tool
+by Simon Cozens.
+
 Paratext assembles the pieces of the lectionary for a year into a single file.
 The SILE program is used to do the typesetting.
 SILE is described here: http://www.sile-typesetter.org/what-is/index.html
@@ -62,6 +71,10 @@ SILE is described here: http://www.sile-typesetter.org/what-is/index.html
        messages about missing references will need to addjust some of the \ref lines to match your 
        versification and verse bridges
 
+* If you are using the {text in Bible|text in Lectionary} method of marking differences
+    -- Open 096XXD.sfm in a text editor that supports regular expressions
+    -- \{[^\|\}]*\|([^\}]*)\}   ==>  \1
+
 * Tools > Advanced > Export Project to USX (remember what directory you put result in)
     -- copy 096XXD.usx to sile/lectionary
     -- Start a Linux shell in ~/sile/lectionary directory
@@ -75,3 +88,4 @@ SILE is described here: http://www.sile-typesetter.org/what-is/index.html
         as each page is typesett, 300-ish pages)
 
 Repeat steps starting at [A] for other two years of the lectionary
+

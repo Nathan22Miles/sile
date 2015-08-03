@@ -58,7 +58,7 @@ text = re.sub(r'<rem>.*?</rem>\s*', r'', text)
 # add <eject/><h>
 text = re.sub(r'<ms1>(.*?)</ms1>', r'  <eject/>\n  <h>\1</h>\n  <ms1>\1</ms1>', text)
 
-# text = re.sub(r'\{[^\|\}]*\|([^\}]*)\}', r'\1', text)
+text = re.sub(r'\{[^\|\}]*\|([^\}]*)\}', r'\1', text)
 
 text = re.sub(r'\n +', r'\n', text)
 
